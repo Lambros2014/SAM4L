@@ -75,9 +75,6 @@
 #include <task.h>
 #include <timers.h>
 
-// From module: GPIO - General-Purpose Input/Output
-#include <gpio.h>
-
 // From module: Generic board support
 #include <board.h>
 

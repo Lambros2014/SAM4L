@@ -92,6 +92,9 @@
 #include <asf.h>
 #include <inttypes.h>
 #include "conf_board.h"
+#include "lib/spi.h"
+#include "led.h"
+
 
 #include "lightsens.h"
 #include "tempsens.h"
@@ -116,6 +119,8 @@ extern void xPortSysTickHandler(void);
 void SysTick_Handler(void)
 {
 	xPortSysTickHandler();
+	
+	
 }
 
 /**
@@ -164,6 +169,19 @@ static void task_monitor(void *pvParameters)
 }
 
 /**
+ * \brief This task, when activated, make LED blink at a fixed rate
+ */
+/*
+static void task_led(void *pvParameters)
+{
+	UNUSED(pvParameters);
+	for (;;) {
+		LED_Toggle(LED0);
+		vTaskDelay(1000);
+	}
+}
+*/
+/**
  * \brief Configure the console UART.
  */
 static void configure_console(void)
@@ -201,7 +219,8 @@ int main(void)
 {
 	/* Initilize the SAM system */
 	sysclk_init();
-	board_init();
+	board_init();	
+	spi_init ();
 
 	/* Initialize the console uart */
 	configure_console();
@@ -213,8 +232,28 @@ int main(void)
 	
 	/* TODO: Suspend tempsens & lightsens tasks. Unsuspend in main task if the user selects it */
 	lightsens_init();
-	tempsens_init();
+	tempsens_init();	
+
+	/* Set up LEDs and a test routine */
+	led_init ();
+	led_test_init ();
 	
+	/* Create task to monitor processor activity */
+	if (xTaskCreate(task_monitor, "Monitor", TASK_MONITOR_STACK_SIZE, NULL,
+			TASK_MONITOR_STACK_PRIORITY, NULL) != pdPASS) {
+		printf("Failed to create Monitor task\r\n");
+	}
+
+	led_init ();
+	
+	
+	/*
+	if (xTaskCreate(task_led, "Led", TASK_LED_STACK_SIZE, NULL,
+			TASK_LED_STACK_PRIORITY, NULL) != pdPASS) {
+		printf("Failed to create test led task\r\n");
+	}
+	*/
+
 	/* Start the scheduler. */
 	vTaskStartScheduler();
 

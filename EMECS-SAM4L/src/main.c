@@ -213,7 +213,7 @@ int main(void)
 	
 	/* TODO: Suspend tempsens & lightsens tasks. Unsuspend in main task if the user selects it */
 	lightsens_init();
-	//tempsens_init();
+	tempsens_init();
 	
 	/* Start the scheduler. */
 	vTaskStartScheduler();

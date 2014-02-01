@@ -54,8 +54,6 @@ void tempsens_task (void)
 	while(1)
 	{
 		//at30tse_read_temperature();
-		printf("Temperature sensor: %i\n", 2);
-		printf("temp\n");
 		
 		vTaskDelay(1000);
 	}

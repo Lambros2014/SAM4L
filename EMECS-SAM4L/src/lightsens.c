@@ -22,8 +22,6 @@ static void adc_cb (void)
 	{
 		val = adc_get_last_conv_value(&g_adc_inst);
 		adc_clear_status(&g_adc_inst,ADCIFE_SCR_SEOC);
-		
-		printf("Light sensor: %d\n", val);
 	}
 }
 
@@ -84,9 +82,7 @@ void lightsens_task (void)
 	adc_enable (&g_adc_inst);
 	adc_ch_set_config (&g_adc_inst, &adc_ch_cfg);
 	adc_set_callback (&g_adc_inst, ADC_SEQ_SEOC, adc_cb, ADCIFE_IRQn, 1);
-
-	printf("Light sensor, init... OK!\n");
-	
+		
  	while(1)
  	{
  		adc_start_software_conversion(&g_adc_inst);

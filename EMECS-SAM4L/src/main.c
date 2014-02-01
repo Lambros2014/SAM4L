@@ -199,17 +199,13 @@ static void configure_console(void)
  */
 int main(void)
 {
-	/* Initilize the SAM system */
+	printf("-- Alive! --\n\r");
+	/* Initialize the SAM system */
 	sysclk_init();
 	board_init();
 
 	/* Initialize the console uart */
 	configure_console();
-	
-	/* Output demo infomation. */
-	printf("-- Freertos Example --\n\r");
-	printf("-- %s\n\r", BOARD_NAME);
-	printf("-- Compiled: %s %s --\n\r", __DATE__, __TIME__);
 	
 	/* TODO: Suspend tempsens & lightsens tasks. Unsuspend in main task if the user selects it */
 	lightsens_init();

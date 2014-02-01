@@ -712,6 +712,9 @@
     <Compile Include="src\gpio.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\io1_xpro.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\lightsens.c">
       <SubType>compile</SubType>
     </Compile>

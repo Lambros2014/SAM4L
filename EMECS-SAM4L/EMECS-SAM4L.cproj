@@ -283,12 +283,12 @@
       <ToolOptions>
         <InterfaceProperties>
           <JtagEnableExtResetOnStartSession>false</JtagEnableExtResetOnStartSession>
-          <SwdClock>6410000</SwdClock>
+          <SwdClock>12000000</SwdClock>
         </InterfaceProperties>
         <InterfaceName>SWD</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.edbg</ToolType>
-      <ToolNumber>ATML1783020200002514</ToolNumber>
+      <ToolNumber>ATML1783020200005081</ToolNumber>
       <ToolName>XPRO-EDBG</ToolName>
     </com_atmel_avrdbg_tool_edbg>
   </PropertyGroup>

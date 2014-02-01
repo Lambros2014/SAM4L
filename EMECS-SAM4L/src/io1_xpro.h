@@ -1,0 +1,62 @@
+/*
+ * oled1_xpro.h
+ *
+ * Created: 02.11.2012 10:31:38
+ *  Author: Are.Halvorsen
+ */ 
+
+
+#ifndef OLED1_XPRO_H_
+#define OLED1_XPRO_H_
+
+#include "SAM4L_XPRO.h"
+
+//LED
+#define IO1_LED1_GPIO			EXT2_GPIO07
+#define IO1_LED1_PIN			EXT2_PIN07
+
+//Light Sensor
+#define IO1_LIGHT_SENSOR_GPIO	EXT2_GPIO03
+#define IO1_LIGHT_SENSOR_PIN	EXT2_PIN03
+
+//Low pass filter output (adc)
+#define IO1_LP_OUT_GPIO			EXT2_GPIO04
+#define IO1_LP_OUT_PIN			EXT2_PIN04
+//Low pass filter input (pwm)
+#define IO1_LP_IN_GPIO			EXT2_GPIO08
+#define IO1_LP_IN_PIN			EXT2_PIN08
+
+//GPIO pins
+#define IO1_GPIO1_GPIO			EXT2_GPIO05
+#define IO1_GPIO1_PIN			EXT2_PIN05
+#define IO1_GPIO2_GPIO			EXT2_GPIO06
+#define IO1_GPIO2_PIN			EXT2_PIN06
+#define IO1_GPIO3				EXT2_GPIO10
+#define IO1_GPIO3_PIN			EXT2_PIN10
+
+//Temperature Sensor
+#define IO1_TEMP_ALERT_GPIO		EXT2_GPIO09
+#define IO1_TEMP_ALERT_PIN		EXT2_PIN09
+#define IO1_TWI_SDA_GPIO		EXT2_GPIO11
+#define IO1_TWI_SDA_PIN			EXT2_PIN11
+#define IO1_TWI_SCL_GPIO		EXT2_GPIO12
+#define IO1_TWI_SCL_PIN			EXT2_PIN12
+
+//UART
+#define IO1_UART_TX_GPIO		EXT2_GPIO14
+#define IO1_UART_TX_PIN			EXT2_PIN14
+#define IO1_UART_RX_GPIO		EXT2_GPIO13
+#define IO1_UART_RX_PIN			EXT2_PIN13
+
+//Dataflash
+#define IO1_SPI_MOSI_GPIO		EXT2_GPIO16
+#define IO1_SPI_MOSI_PIN		EXT2_PIN16
+#define IO1_SPI_MISO_GPIO		EXT2_GPIO17
+#define IO1_SPI_MISO_PIN		EXT2_PIN17
+#define IO1_SPI_SCK_GPIO		EXT2_GPIO18
+#define IO1_SPI_SCK_PIN			EXT2_PIN18
+#define IO1_DATAFLASH_SS_GPIO	EXT2_GPIO15
+#define IO1_DATAFLASH_SS_PIN	EXT2_PIN15
+
+
+#endif /* OLED1_XPRO_H_ */

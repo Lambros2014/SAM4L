@@ -30,11 +30,13 @@
         <options>
           <option id="common.boards" value="Add" config="" content-id="Atmel.ASF" />
           <option id="common.services.basic.clock" value="Add" config="" content-id="Atmel.ASF" />
-          <option id="common.services.freertos.sam_example" value="Add" config="" content-id="Atmel.ASF" />
           <option id="common.services.ioport" value="Add" config="" content-id="Atmel.ASF" />
-          <option id="common.services.os.freertos" value="Add" config="" content-id="Atmel.ASF" />
           <option id="common.utils.stdio.stdio_serial" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="sam.drivers.gpio" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.drivers.wdt" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="sam.drivers.adcife" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="common.services.freertos.sam_example" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="common.services.os.freertos" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.utils.cmsis.sam4l.source.template" value="Add" config="" content-id="Atmel.ASF" />
         </options>
         <configurations>
@@ -46,6 +48,8 @@
           <configuration key="config.compiler.iarewarm.low_level_lib" value="semihosted" default="semihosted" content-id="Atmel.ASF" />
           <configuration key="config.compiler.iarewarm.heap_size" value="0x1000" default="0x1000" content-id="Atmel.ASF" />
           <configuration key="config.compiler.as5_arm.create_aux" value="no" default="no" content-id="Atmel.ASF" />
+          <configuration key="config.compiler.armgcc.printf" value="iprintf" default="iprintf" content-id="Atmel.ASF" />
+          <configuration key="config.compiler.armgcc.scanf" value="iscanf" default="iscanf" content-id="Atmel.ASF" />
         </configurations>
         <files>
           <file path="src/ASF/common/boards/board.h" framework="" version="" source="common/boards/board.h" changed="False" content-id="Atmel.ASF" />
@@ -252,6 +256,17 @@
           <file path="src/ASF/thirdparty/freertos/freertos-7.0.0/source/queue.c" framework="" version="" source="thirdparty/freertos/freertos-7.0.0/source/queue.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/freertos/freertos-7.0.0/source/tasks.c" framework="" version="" source="thirdparty/freertos/freertos-7.0.0/source/tasks.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/freertos/freertos-7.0.0/source/timers.c" framework="" version="" source="thirdparty/freertos/freertos-7.0.0/source/timers.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam/drivers/gpio/gpio.c" framework="" version="3.14.0" source="sam\drivers\gpio\gpio.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam/drivers/gpio/gpio.h" framework="" version="3.14.0" source="sam\drivers\gpio\gpio.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam/drivers/adcife/adcife.c" framework="" version="3.14.0" source="sam\drivers\adcife\adcife.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam/drivers/adcife/adcife.h" framework="" version="3.14.0" source="sam\drivers\adcife\adcife.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/Config/conf_adcife.h" framework="" version="3.14.0" source="sam\drivers\adcife\module_config\conf_adcife.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam/drivers/pdca/pdca.c" framework="" version="3.14.0" source="sam\drivers\pdca\pdca.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam/drivers/pdca/pdca.h" framework="" version="3.14.0" source="sam\drivers\pdca\pdca.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/services/sleepmgr/sam4l/sleepmgr.c" framework="" version="3.14.0" source="common\services\sleepmgr\sam4l\sleepmgr.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/services/sleepmgr/sleepmgr.h" framework="" version="3.14.0" source="common\services\sleepmgr\sleepmgr.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/services/sleepmgr/sam4l/sleepmgr.h" framework="" version="3.14.0" source="common\services\sleepmgr\sam4l\sleepmgr.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/Config/conf_sleepmgr.h" framework="" version="3.14.0" source="common\services\sleepmgr\sam4l\module_config\conf_sleepmgr.h" changed="False" content-id="Atmel.ASF" />
         </files>
         <documentation help="http://asf.atmel.com/docs/3.14.0/common.services.freertos.sam_example.sam4l_xplained_pro/html/index.html" />
         <offline-documentation help="" />
@@ -273,7 +288,7 @@
         <InterfaceName>SWD</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.edbg</ToolType>
-      <ToolNumber>ATML1783020200005800</ToolNumber>
+      <ToolNumber>ATML1783020200005081</ToolNumber>
       <ToolName>XPRO-EDBG</ToolName>
     </com_atmel_avrdbg_tool_edbg>
   </PropertyGroup>
@@ -322,6 +337,10 @@
             <Value>../src/ASF/sam/drivers/usart</Value>
             <Value>../src/ASF/sam/drivers/flashcalw</Value>
             <Value>../src/ASF/thirdparty/freertos/freertos-7.0.0/source/portable/gcc/sam</Value>
+            <Value>../src/ASF/sam/drivers/gpio</Value>
+            <Value>../src/ASF/sam/drivers/adcife</Value>
+            <Value>../src/ASF/sam/drivers/pdca</Value>
+            <Value>../src/ASF/common/services/sleepmgr</Value>
           </ListValues>
         </armgcc.compiler.directories.IncludePaths>
         <armgcc.compiler.optimization.level>Optimize most (-O3)</armgcc.compiler.optimization.level>
@@ -377,6 +396,10 @@
             <Value>../src/ASF/sam/drivers/usart</Value>
             <Value>../src/ASF/sam/drivers/flashcalw</Value>
             <Value>../src/ASF/thirdparty/freertos/freertos-7.0.0/source/portable/gcc/sam</Value>
+            <Value>../src/ASF/sam/drivers/gpio</Value>
+            <Value>../src/ASF/sam/drivers/adcife</Value>
+            <Value>../src/ASF/sam/drivers/pdca</Value>
+            <Value>../src/ASF/common/services/sleepmgr</Value>
           </ListValues>
         </armgcc.assembler.general.IncludePaths>
         <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM4=true -DBOARD=SAM4L_XPLAINED_PRO -D__SAM4LC4C__ -Dprintf=iprintf -Dscanf=iscanf</armgcc.preprocessingassembler.general.AssemblerFlags>
@@ -414,6 +437,10 @@
             <Value>../src/ASF/sam/drivers/usart</Value>
             <Value>../src/ASF/sam/drivers/flashcalw</Value>
             <Value>../src/ASF/thirdparty/freertos/freertos-7.0.0/source/portable/gcc/sam</Value>
+            <Value>../src/ASF/sam/drivers/gpio</Value>
+            <Value>../src/ASF/sam/drivers/adcife</Value>
+            <Value>../src/ASF/sam/drivers/pdca</Value>
+            <Value>../src/ASF/common/services/sleepmgr</Value>
           </ListValues>
         </armgcc.preprocessingassembler.general.IncludePaths>
       </ArmGcc>
@@ -464,6 +491,14 @@
             <Value>../src/ASF/sam/drivers/usart</Value>
             <Value>../src/ASF/sam/drivers/flashcalw</Value>
             <Value>../src/ASF/thirdparty/freertos/freertos-7.0.0/source/portable/gcc/sam</Value>
+            <Value>../src/ASF/sam/drivers/gpio</Value>
+            <Value>C:\Program Files (x86)\Atmel\Atmel Toolchain\ARM GCC\Native\4.7.3.1029\CMSIS_Atmel\Device\ATMEL\sam.h</Value>
+            <Value>C:\Program Files (x86)\Atmel\Atmel Toolchain\ARM GCC\Native\4.7.3.1029\CMSIS_Atmel\Device\ATMEL\</Value>
+            <Value>C:\Users\student\Downloads\IO1_EXT2_SAM4L-XPRO\IO1_SAM4L-XPRO\src\io1_xpro.h</Value>
+            <Value>C:\Users\student\Downloads\IO1_EXT2_SAM4L-XPRO\IO1_SAM4L-XPRO\src\</Value>
+            <Value>../src/ASF/sam/drivers/adcife</Value>
+            <Value>../src/ASF/sam/drivers/pdca</Value>
+            <Value>../src/ASF/common/services/sleepmgr</Value>
           </ListValues>
         </armgcc.compiler.directories.IncludePaths>
         <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
@@ -482,6 +517,8 @@
           <ListValues>
             <Value>../cmsis/linkerScripts</Value>
             <Value>../src/ASF/thirdparty/CMSIS/Lib/GCC</Value>
+            <Value>C:\Program Files (x86)\Atmel\Atmel Toolchain\ARM GCC\Native\4.7.3.1029\CMSIS_Atmel\Device\ATMEL\</Value>
+            <Value>C:\Users\student\Downloads\IO1_EXT2_SAM4L-XPRO\IO1_SAM4L-XPRO\src\</Value>
           </ListValues>
         </armgcc.linker.libraries.LibrarySearchPaths>
         <armgcc.linker.optimization.GarbageCollectUnusedSections>True</armgcc.linker.optimization.GarbageCollectUnusedSections>
@@ -520,6 +557,10 @@
             <Value>../src/ASF/sam/drivers/usart</Value>
             <Value>../src/ASF/sam/drivers/flashcalw</Value>
             <Value>../src/ASF/thirdparty/freertos/freertos-7.0.0/source/portable/gcc/sam</Value>
+            <Value>../src/ASF/sam/drivers/gpio</Value>
+            <Value>../src/ASF/sam/drivers/adcife</Value>
+            <Value>../src/ASF/sam/drivers/pdca</Value>
+            <Value>../src/ASF/common/services/sleepmgr</Value>
           </ListValues>
         </armgcc.assembler.general.IncludePaths>
         <armgcc.assembler.debugging.DebugLevel>Default (-g)</armgcc.assembler.debugging.DebugLevel>
@@ -558,6 +599,10 @@
             <Value>../src/ASF/sam/drivers/usart</Value>
             <Value>../src/ASF/sam/drivers/flashcalw</Value>
             <Value>../src/ASF/thirdparty/freertos/freertos-7.0.0/source/portable/gcc/sam</Value>
+            <Value>../src/ASF/sam/drivers/gpio</Value>
+            <Value>../src/ASF/sam/drivers/adcife</Value>
+            <Value>../src/ASF/sam/drivers/pdca</Value>
+            <Value>../src/ASF/common/services/sleepmgr</Value>
           </ListValues>
         </armgcc.preprocessingassembler.general.IncludePaths>
         <armgcc.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcc.preprocessingassembler.debugging.DebugLevel>
@@ -576,6 +621,8 @@
     <Folder Include="src\ASF\common\services\ioport\sam\" />
     <Folder Include="src\ASF\common\services\serial\" />
     <Folder Include="src\ASF\common\services\serial\sam_uart\" />
+    <Folder Include="src\ASF\common\services\sleepmgr\" />
+    <Folder Include="src\ASF\common\services\sleepmgr\sam4l\" />
     <Folder Include="src\ASF\common\utils\" />
     <Folder Include="src\ASF\common\utils\interrupt\" />
     <Folder Include="src\ASF\common\utils\stdio\" />
@@ -584,8 +631,11 @@
     <Folder Include="src\ASF\sam\boards\" />
     <Folder Include="src\ASF\sam\boards\sam4l_xplained_pro\" />
     <Folder Include="src\ASF\sam\drivers\" />
+    <Folder Include="src\ASF\sam\drivers\adcife\" />
     <Folder Include="src\ASF\sam\drivers\bpm\" />
     <Folder Include="src\ASF\sam\drivers\flashcalw\" />
+    <Folder Include="src\ASF\sam\drivers\gpio\" />
+    <Folder Include="src\ASF\sam\drivers\pdca\" />
     <Folder Include="src\ASF\sam\drivers\usart\" />
     <Folder Include="src\ASF\sam\drivers\wdt\" />
     <Folder Include="src\ASF\sam\utils\" />
@@ -623,6 +673,69 @@
     <Folder Include="src\config\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\ASF\common\services\sleepmgr\sam4l\sleepmgr.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\common\services\sleepmgr\sleepmgr.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\services\sleepmgr\sam4l\sleepmgr.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\sam\drivers\adcife\adcife.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\sam\drivers\adcife\adcife.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\sam\drivers\pdca\pdca.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\sam\drivers\pdca\pdca.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\at30tse75x.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\at30tse75x.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\config\conf_adcife.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\config\conf_sleepmgr.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\gpio.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\gpio.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\io1_xpro.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\lightsens.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\lightsens.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\SAM4L_XPRO.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\tempsens.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\tempsens.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\twi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\twi.h">
+      <SubType>compile</SubType>
+    </Compile>
     <None Include="src\asf.h">
       <SubType>compile</SubType>
     </None>
@@ -1118,6 +1231,12 @@
     <Compile Include="src\ASF\sam\drivers\flashcalw\flashcalw.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\ASF\sam\drivers\gpio\gpio.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\sam\drivers\gpio\gpio.h">
+      <SubType>compile</SubType>
+    </None>
     <Compile Include="src\ASF\sam\drivers\usart\usart.c">
       <SubType>compile</SubType>
     </Compile>

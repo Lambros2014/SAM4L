@@ -90,12 +90,18 @@
  */
 
 #include <asf.h>
+#include <inttypes.h>
 #include "conf_board.h"
+
+#include "lightsens.h"
+#include "tempsens.h"
 
 #define TASK_MONITOR_STACK_SIZE            (2048/sizeof(portSTACK_TYPE))
 #define TASK_MONITOR_STACK_PRIORITY        (tskIDLE_PRIORITY)
 #define TASK_LED_STACK_SIZE                (1024/sizeof(portSTACK_TYPE))
 #define TASK_LED_STACK_PRIORITY            (tskIDLE_PRIORITY)
+#define TASK_TEST_STACK_SIZE                (1024/sizeof(portSTACK_TYPE))
+#define TASK_TEST_STACK_PRIORITY            (tskIDLE_PRIORITY)
 
 extern void vApplicationStackOverflowHook(xTaskHandle *pxTask,
 		signed char *pcTaskName);
@@ -158,18 +164,6 @@ static void task_monitor(void *pvParameters)
 }
 
 /**
- * \brief This task, when activated, make LED blink at a fixed rate
- */
-static void task_led(void *pvParameters)
-{
-	UNUSED(pvParameters);
-	for (;;) {
-		LED_Toggle(LED0);
-		vTaskDelay(1000);
-	}
-}
-
-/**
  * \brief Configure the console UART.
  */
 static void configure_console(void)
@@ -211,24 +205,16 @@ int main(void)
 
 	/* Initialize the console uart */
 	configure_console();
-
+	
 	/* Output demo infomation. */
 	printf("-- Freertos Example --\n\r");
 	printf("-- %s\n\r", BOARD_NAME);
 	printf("-- Compiled: %s %s --\n\r", __DATE__, __TIME__);
-
-	/* Create task to monitor processor activity */
-	if (xTaskCreate(task_monitor, "Monitor", TASK_MONITOR_STACK_SIZE, NULL,
-			TASK_MONITOR_STACK_PRIORITY, NULL) != pdPASS) {
-		printf("Failed to create Monitor task\r\n");
-	}
-
-	/* Create task to make led blink */
-	if (xTaskCreate(task_led, "Led", TASK_LED_STACK_SIZE, NULL,
-			TASK_LED_STACK_PRIORITY, NULL) != pdPASS) {
-		printf("Failed to create test led task\r\n");
-	}
-
+	
+	/* TODO: Suspend tempsens & lightsens tasks. Unsuspend in main task if the user selects it */
+	lightsens_init();
+	tempsens_init();
+	
 	/* Start the scheduler. */
 	vTaskStartScheduler();
 

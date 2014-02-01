@@ -92,9 +92,9 @@
 #include <asf.h>
 #include <inttypes.h>
 #include "conf_board.h"
-//#include "adc.h"
-#include "twi.h"
-#include "at30tse75x.h"
+
+#include "lightsens.h"
+#include "tempsens.h"
 
 #define TASK_MONITOR_STACK_SIZE            (2048/sizeof(portSTACK_TYPE))
 #define TASK_MONITOR_STACK_PRIORITY        (tskIDLE_PRIORITY)
@@ -164,108 +164,6 @@ static void task_monitor(void *pvParameters)
 }
 
 /**
- * \brief This task, when activated, make LED blink at a fixed rate
- */
-static void task_led(void *pvParameters)
-{
-	UNUSED(pvParameters);
-	for (;;) {
-		LED_Toggle(LED0);
-		vTaskDelay(1000);
-	}
-}
-
-struct adc_dev_inst g_adc_inst;
-
-static void adc_read (uint8_t chan)
-{
-	(uint8_t) chan;
-	
-	adc_start_software_conversion(&g_adc_inst);
-}
-
-static void adc_handle (void)
-{
-	uint16_t val;
-	
-	if ((adc_get_status(&g_adc_inst) & ADCIFE_SR_SEOC) == ADCIFE_SR_SEOC)
-	{
-		val = adc_get_last_conv_value(&g_adc_inst);
-		adc_clear_status(&g_adc_inst,ADCIFE_SCR_SEOC);
-		
-		printf("adc value: %d\n", val);
-	}
-}
-
-/**
-* \brief Test task
-*/
-static void task_test(void *pvParameters)
-{
-	/* Init stuff here  */
-	
-	/* temp */
-	twi_init();
-	
-	// Read thigh and tlow
-	volatile uint16_t thigh = 0;
-	thigh = at30tse_read_register(AT30TSE_THIGH_REG, AT30TSE_NON_VOLATILE_REG, AT30TSE_THIGH_REG_SIZE);
-	volatile uint16_t tlow = 0;
-	tlow = at30tse_read_register(AT30TSE_TLOW_REG, AT30TSE_NON_VOLATILE_REG, AT30TSE_TLOW_REG_SIZE);
-	
-	// Set 12-bit resolution mode.
-	at30tse_write_config_register(AT30TSE_CONFIG_RES(AT30TSE_CONFIG_RES_12_bit));
-	
-	volatile double temperature; 
-
-	/* ADC */	
-	struct adc_config adc_cfg = {
-		.prescal = ADC_PRESCAL_DIV16,
-		.clksel = ADC_CLKSEL_APBCLK,
-		.speed = ADC_SPEED_75K,
-		.refsel = ADC_REFSEL_1,
-		.start_up = CONFIG_ADC_STARTUP
-	};
-
-	struct adc_seq_config adc_seq_cfg = {
-		.zoomrange = ADC_ZOOMRANGE_0,
-		.muxneg = ADC_MUXNEG_7,
-		.muxpos = ADC_MUXPOS_6,
-		.internal = ADC_INTERNAL_2,
-		.gcomp = ADC_GCOMP_DIS,
-		.hwla = ADC_HWLA_DIS,
-		.res = ADC_RES_12_BIT,
-		.bipolar = ADC_BIPOLAR_SINGLEENDED
-	};
-	
-	 struct adc_ch_config adc_ch_cfg = {
-		 .seq_cfg = &adc_seq_cfg,
-		 .internal_timer_max_count = 60,
-		 .window_mode = 0,
-		 .low_threshold = 0,
-		 .high_threshold = 0,
-	 };
-	
-	adc_init (&g_adc_inst, ADCIFE, &adc_cfg);
-	adc_enable (&g_adc_inst);
-	adc_ch_set_config (&g_adc_inst, &adc_ch_cfg);
-	adc_set_callback (&g_adc_inst, ADC_SEQ_SEOC, adc_handle, ADCIFE_IRQn, 1);
-
-	printf("Init OK\n");
-	
-	while(1)
-	{
-		/* Everything else here */
-		adc_read (0);
-		temperature = at30tse_read_temperature();
-		
-		printf("temp = %d \n", (int)temperature);
-		
-		vTaskDelay(1000);
-	}
-}
-
-/**
  * \brief Configure the console UART.
  */
 static void configure_console(void)
@@ -304,34 +202,19 @@ int main(void)
 	/* Initilize the SAM system */
 	sysclk_init();
 	board_init();
-	twi_init();
 
 	/* Initialize the console uart */
 	configure_console();
 	
-
 	/* Output demo infomation. */
 	printf("-- Freertos Example --\n\r");
 	printf("-- %s\n\r", BOARD_NAME);
 	printf("-- Compiled: %s %s --\n\r", __DATE__, __TIME__);
 	
-	if (xTaskCreate(task_test, "Test", TASK_TEST_STACK_SIZE, NULL,
-	TASK_TEST_STACK_PRIORITY, NULL) != pdPASS) {
-		printf("Failed to create Test task\r\n");
-	}
-
-	/* Create task to monitor processor activity */
-	//if (xTaskCreate(task_monitor, "Monitor", TASK_MONITOR_STACK_SIZE, NULL,
-	//		TASK_MONITOR_STACK_PRIORITY, NULL) != pdPASS) {
-	//	printf("Failed to create Monitor task\r\n");
-	//}
-
-	/* Create task to make led blink */
-	//if (xTaskCreate(task_led, "Led", TASK_LED_STACK_SIZE, NULL,
-	//		TASK_LED_STACK_PRIORITY, NULL) != pdPASS) {
-	//	printf("Failed to create test led task\r\n");
-	//}
-
+	/* TODO: Suspend tempsens & lightsens tasks. Unsuspend in main task if the user selects it */
+	lightsens_init();
+	//tempsens_init();
+	
 	/* Start the scheduler. */
 	vTaskStartScheduler();
 

@@ -75,8 +75,8 @@
 #define configUSE_TICK_HOOK                        1
 #define configCPU_CLOCK_HZ                         (sysclk_get_cpu_hz())
 #define configTICK_RATE_HZ                         ((portTickType) 1000)
-#define configMINIMAL_STACK_SIZE                   ((unsigned short) 70)
-//#define configTOTAL_HEAP_SIZE                    ((size_t) ( 0x2C00-600 ))
+#define configMINIMAL_STACK_SIZE                   ((unsigned short) 150)
+#define configTOTAL_HEAP_SIZE                    ((size_t) ( 0x2C00-600 ))
 #define configMAX_TASK_NAME_LEN                    ( 16 )
 #define configUSE_TRACE_FACILITY                   1
 #define configUSE_16_BIT_TICKS                     0
@@ -100,7 +100,7 @@ to exclude the API function. */
 #define INCLUDE_vTaskDelete                        0
 #define INCLUDE_vTaskCleanUpResources              0
 #define INCLUDE_vTaskSuspend                       1
-#define INCLUDE_vTaskDelayUntil                    0
+#define INCLUDE_vTaskDelayUntil                    1
 #define INCLUDE_vTaskDelay                         1
 #define INCLUDE_uxTaskGetStackHighWaterMark        1
 
